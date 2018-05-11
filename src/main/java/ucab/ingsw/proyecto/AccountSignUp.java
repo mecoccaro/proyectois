@@ -29,7 +29,7 @@ public class AccountSignUp implements Serializable {
 
     @Size(max = Validation.FIRST_LAST_NAME_SIZE, message = "El nombre debe tener menos de 50 caracteres")
     @Pattern(regexp = Validation.FIRST_LAST_NAME_REGEX, message = "Caracteres invalidos")
-    private String firstName;
+    private String name;
 
     @Size(max = Validation.FIRST_LAST_NAME_SIZE, message = "El apellido debe tener menos de 50 caracteres")
     @Pattern(regexp = Validation.FIRST_LAST_NAME_REGEX, message = "Caracteres invalidos")

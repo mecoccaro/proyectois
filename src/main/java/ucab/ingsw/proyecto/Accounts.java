@@ -19,4 +19,5 @@ public class Accounts implements Serializable {
     private String lastName;
     private String email;
     private String password;
+    private String uuid = UUID.randomUUID().toString();
 }
