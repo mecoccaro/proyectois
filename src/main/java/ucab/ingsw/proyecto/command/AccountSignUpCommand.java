@@ -1,15 +1,14 @@
-package ucab.ingsw.proyecto;
+package ucab.ingsw.proyecto.command;
 
 import lombok.Data;
 import lombok.ToString;
 
-import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 
 @Data
 @ToString
-public class AccountSignUp implements Serializable {
+public class AccountSignUpCommand implements Serializable {
 
     @NotNull(message = "Se requiere un correo electronico")
     @NotEmpty(message = "Se requiere un correo electronico")

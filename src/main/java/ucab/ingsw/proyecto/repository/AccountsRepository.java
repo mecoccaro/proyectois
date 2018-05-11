@@ -1,11 +1,12 @@
-package ucab.ingsw.proyecto;
+package ucab.ingsw.proyecto.repository;
 
-import org.springframework.stereotype.Repository;
+import ucab.ingsw.proyecto.model.Accounts;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository("accountsRepository")
+@Repository("AccountsRepository")
 public interface AccountsRepository  extends CrudRepository<Accounts, Long>{
 
     List<Accounts> findFirst3ByEmailIgnoreCaseContaining(String partialEmailAdress);

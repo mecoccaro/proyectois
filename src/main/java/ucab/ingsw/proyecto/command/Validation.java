@@ -1,4 +1,4 @@
-package ucab.ingsw.proyecto;
+package ucab.ingsw.proyecto.command;
 
 public interface Validation {
     int EMAIL_MIN_SIZE = 6;

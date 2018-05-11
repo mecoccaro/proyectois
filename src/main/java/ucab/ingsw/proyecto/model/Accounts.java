@@ -1,4 +1,4 @@
-package ucab.ingsw.proyecto;
+package ucab.ingsw.proyecto.model;
 
 import lombok.Data;
 import lombok.ToString;
@@ -14,9 +14,9 @@ public class Accounts implements Serializable {
 
     @Id
     private long id;
-
-    private String name;
+    private String FirstName;
     private String lastName;
     private String email;
     private String password;
+    private String uuid = UUID.randomUUID().toString();
 }
