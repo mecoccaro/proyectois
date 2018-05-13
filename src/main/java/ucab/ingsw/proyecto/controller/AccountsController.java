@@ -3,6 +3,7 @@ package ucab.ingsw.proyecto.controller;
 import ucab.ingsw.proyecto.service.AccountService;
 import ucab.ingsw.proyecto.response.AccountsResponse;
 import ucab.ingsw.proyecto.command.AccountSignUpCommand;
+import ucab.ingsw.proyecto.command.AccountLogInCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,27 +21,15 @@ public class AccountsController {
     @Autowired
     private AccountService accountService;
 
-    @RequestMapping(value = "", consumes = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/registration", consumes = "application/json", method = RequestMethod.POST)
     public ResponseEntity register(@Valid @RequestBody AccountSignUpCommand command) {
-
-        boolean result = accountService.register(command);
-        return ResponseEntity.ok(result);
+        return accountService.register(command);
     }
 
-    @RequestMapping(value = "/{email}", method = RequestMethod.GET)
-    public ResponseEntity<List<AccountsResponse>> getAccountsByEmail(@PathVariable("email") String email) {
-
-        ArrayList<AccountsResponse> response = new ArrayList<>();
-        accountService.findAccountsByEmail(email).forEach(it ->{
-            AccountsResponse accountsResponse = new AccountsResponse();
-            accountsResponse.setFirstName(it.getFirstName());
-            accountsResponse.setLastName(it.getLastName());
-            accountsResponse.setEmail(it.getEmail());
-            accountsResponse.setId(it.getUuid());
-
-            response.add(accountsResponse);
-        });
-
-        return ResponseEntity.ok(response);
+    @RequestMapping(value = "/login", consumes = "application/json", method = RequestMethod.POST)
+    public ResponseEntity login(@Valid @RequestBody AccountLogInCommand command) {
+        return accountService.login(command);
     }
+    
+
 }
