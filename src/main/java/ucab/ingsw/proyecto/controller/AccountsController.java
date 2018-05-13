@@ -30,6 +30,6 @@ public class AccountsController {
     public ResponseEntity login(@Valid @RequestBody AccountLogInCommand command) {
         return accountService.login(command);
     }
-    
+
 
 }

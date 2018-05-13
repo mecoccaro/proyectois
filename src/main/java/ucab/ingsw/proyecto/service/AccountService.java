@@ -5,12 +5,11 @@ import ucab.ingsw.proyecto.command.AccountSignUpCommand;
 import ucab.ingsw.proyecto.command.AccountLogInCommand;
 import ucab.ingsw.proyecto.response.AccountsResponse;
 import ucab.ingsw.proyecto.response.AlertsResponse;
+import ucab.ingsw.proyecto.repository.AccountsRepository;
+import ucab.ingsw.proyecto.model.Accounts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ucab.ingsw.proyecto.model.Accounts;
-import ucab.ingsw.proyecto.repository.AccountsRepository;
-import ucab.ingsw.proyecto.response.AccountsResponse;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -38,19 +37,7 @@ public class AccountService {
         response.setMessage(message);
         return response;
     }
-
-
-//    public boolean register(AccountSignUpCommand command) {
-//
-//        log.debug("About to process [{}]", command);
-//
-//        Accounts account = buildAccount(command) ;
-//        account = accountsRepository.save(account);
-//
-//        log.info("Registered customer with ID={}", account.getId());
-//        return true;
-//    }
-
+    
     public ResponseEntity<Object> register(AccountSignUpCommand command) {
         log.debug("About to process [{}]", command);
 
