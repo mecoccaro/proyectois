@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping(value="/account", produces = "application/json")
