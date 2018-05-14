@@ -20,7 +20,7 @@ import java.util.List;
 @Service("accountService")
 public class AccountService {
 
-    @Autowired(required=false)
+    @Autowired
     private AccountsRepository accountsRepository;
 
     private Accounts buildAccount(AccountSignUpCommand command) {
