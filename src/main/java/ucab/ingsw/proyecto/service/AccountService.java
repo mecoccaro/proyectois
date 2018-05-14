@@ -19,7 +19,7 @@ import java.util.List;
 @Service("accountService")
 public class AccountService {
 
-    @Autowired(required=false)
+    @Autowired(required=false) // Arreglo que se tuvo que hacer para solucionar problema con el bean.
     private AccountsRepository accountsRepository;
 
     private Accounts buildAccount(AccountSignUpCommand command) {
