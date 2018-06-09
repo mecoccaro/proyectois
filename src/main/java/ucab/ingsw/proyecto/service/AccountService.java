@@ -20,7 +20,7 @@ import java.util.List;
 @Service("accountService")
 public class AccountService {
 
-    @Autowired(required=false)
+    @Autowired
     private AccountsRepository accountsRepository;
 
     private Accounts buildAccount(AccountSignUpCommand command) {
@@ -40,21 +40,10 @@ public class AccountService {
     }
 
 
-//    public boolean register(AccountSignUpCommand command) {
-//
-//        log.debug("About to process [{}]", command);
-//
-//        Accounts account = buildAccount(command) ;
-//        account = accountsRepository.save(account);
-//
-//        log.info("Registered customer with ID={}", account.getId());
-//        return true;
-//    }
-
     public ResponseEntity<Object> register(AccountSignUpCommand command) {
         log.debug("About to process [{}]", command);
 
-        if(accountsRepository.searchByEmail(command.getEmail())){
+        if(accountsRepository.existsByEmail(command.getEmail())){
             log.info("email {} already registered", command.getEmail());
             return ResponseEntity.badRequest().body(buildAlert("La cuenta ya esta registrada."));
         }

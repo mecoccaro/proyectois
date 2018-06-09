@@ -6,11 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository("AccountsRepository")
+@Repository
 public interface AccountsRepository  extends CrudRepository<Accounts, Long>{
 
     List<Accounts> findFirst3ByEmailIgnoreCaseContaining(String partialEmailAdress);
-    boolean  searchByEmail(String email);
+    boolean  existsByEmail(String email);
     Accounts findByEmail(String email);
 
 }

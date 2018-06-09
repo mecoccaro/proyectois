@@ -7,5 +7,5 @@ public interface Validation {
 
     int FIRST_LAST_NAME_SIZE = 50;
 
-    String FIRST_LAST_NAME_REGEX = "[a-zA-z] ([&. '-]?[a-zA-Z] [&. '-]?)*";
+    String FIRST_LAST_NAME_REGEX = "[a-zA-z]*";
 }

@@ -14,7 +14,7 @@ public class Accounts implements Serializable {
 
     @Id
     private long id;
-    private String FirstName;
+    private String firstName;
     private String lastName;
     private String email;
     private String password;
