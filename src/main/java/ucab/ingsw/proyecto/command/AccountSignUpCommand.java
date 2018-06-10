@@ -10,6 +10,14 @@ import java.io.Serializable;
 @ToString
 public class AccountSignUpCommand implements Serializable {
 
+    @Size(max = Validation.FIRST_LAST_NAME_SIZE, message = "El nombre debe tener menos de 50 caracteres")
+    @Pattern(regexp = Validation.FIRST_LAST_NAME_REGEX, message = "Caracteres invalidos")
+    private String firstName;
+
+    @Size(max = Validation.FIRST_LAST_NAME_SIZE, message = "El apellido debe tener menos de 50 caracteres")
+    @Pattern(regexp = Validation.FIRST_LAST_NAME_REGEX, message = "Caracteres invalidos")
+    private String lastName;
+
     @NotNull(message = "Se requiere un correo electronico")
     @NotEmpty(message = "Se requiere un correo electronico")
     @Size(min = Validation.EMAIL_MIN_SIZE, message = "El correo debe tener al menos 6 caracteres")
@@ -26,11 +34,4 @@ public class AccountSignUpCommand implements Serializable {
     @Size(min = Validation.PASSWORD_MIN_SIZE, message = "La contraseña debe 6 caracteres o mas ")
     private String confirmationPassword;
 
-    @Size(max = Validation.FIRST_LAST_NAME_SIZE, message = "El nombre debe tener menos de 50 caracteres")
-    @Pattern(regexp = Validation.FIRST_LAST_NAME_REGEX, message = "Caracteres invalidos")
-    private String firstName;
-
-    @Size(max = Validation.FIRST_LAST_NAME_SIZE, message = "El apellido debe tener menos de 50 caracteres")
-    @Pattern(regexp = Validation.FIRST_LAST_NAME_REGEX, message = "Caracteres invalidos")
-    private String lastName;
 }
