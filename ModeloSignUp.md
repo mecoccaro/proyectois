@@ -1,7 +1,8 @@
 {
-    "firstName" : "Miguel",
-    "lastName" : "Coccaro",
-	"email" : "miguele.coccaro@yahoo.com",
-	"password" : "clave01",
-	"confirmationPassword" : "clave01"
+    "firstName" : "nombre",
+    "lastName" : "apellido",
+    "dateOfBirth" : "DD/MM/AA",
+	"email" : "email",
+	"password" : "clave",
+	"confirmationPassword" : "clave"
 }

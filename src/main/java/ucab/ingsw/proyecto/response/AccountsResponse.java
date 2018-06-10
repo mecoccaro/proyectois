@@ -10,6 +10,8 @@ public class AccountsResponse {
     private String id;
     private String firstName;
     private String lastName;
+    private String dateOfBirth;
     private String email;
     private String password;
+
 }

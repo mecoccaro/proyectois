@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface AccountsRepository  extends CrudRepository<Accounts, Long>{
 
-    List<Accounts> findFirst3ByEmailIgnoreCaseContaining(String partialEmailAdress);
+    List<Accounts> findByEmailIgnoreCaseContaining(String partialEmailAdress);
     boolean  existsByEmail(String email);
     Accounts findByEmail(String email);
 

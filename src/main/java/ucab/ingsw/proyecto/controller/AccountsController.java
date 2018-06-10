@@ -1,5 +1,6 @@
 package ucab.ingsw.proyecto.controller;
 
+import ucab.ingsw.proyecto.command.AccountUpdateCommand;
 import ucab.ingsw.proyecto.service.AccountService;
 import ucab.ingsw.proyecto.response.AccountsResponse;
 import ucab.ingsw.proyecto.command.AccountSignUpCommand;
@@ -30,6 +31,11 @@ public class AccountsController {
     @RequestMapping(value = "/login", consumes = "application/json", method = RequestMethod.POST)
     public ResponseEntity login(@Valid @RequestBody AccountLogInCommand command) {
         return accountService.login(command);
+    }
+
+    @RequestMapping(value = "/update/{uuid}", consumes = "application/json", method = RequestMethod.PUT)
+    public ResponseEntity update(@Valid @RequestBody AccountUpdateCommand command, @PathVariable("id") String uuid) {
+        return accountService.updateAccount(command, uuid);
     }
 
 }

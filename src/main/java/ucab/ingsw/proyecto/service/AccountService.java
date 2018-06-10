@@ -3,6 +3,7 @@ package ucab.ingsw.proyecto.service;
 import org.springframework.http.ResponseEntity;
 import ucab.ingsw.proyecto.command.AccountSignUpCommand;
 import ucab.ingsw.proyecto.command.AccountLogInCommand;
+import ucab.ingsw.proyecto.command.AccountUpdateCommand;
 import ucab.ingsw.proyecto.response.AccountsResponse;
 import ucab.ingsw.proyecto.response.AlertsResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -28,12 +29,14 @@ public class AccountService {
         account.setId(System.currentTimeMillis());
         account.setFirstName(command.getFirstName());
         account.setLastName(command.getLastName());
+        account.setDateOfBirth(command.getDateOfBirth());
         account.setEmail(command.getEmail());
         account.setPassword(command.getPassword());
 
         return account;
     }
-    private AlertsResponse buildAlert(String message){
+
+    private AlertsResponse buildAlert(String message) {
         AlertsResponse response = new AlertsResponse();
         response.setMessage(message);
         return response;
@@ -50,7 +53,7 @@ public class AccountService {
         else {
             if(!command.getPassword().equals(command.getConfirmationPassword())) {
                 log.info("Mismatching passwords.");
-                return ResponseEntity.badRequest().body(buildAlert("Las contraseñas son diferentes."));
+                return ResponseEntity.badRequest().body(buildAlert("Las contraseñas no coinciden."));
             }
 
             else {
@@ -81,6 +84,7 @@ public class AccountService {
                 AccountsResponse accountsResponse = new AccountsResponse();
                 accountsResponse.setFirstName(account.getFirstName());
                 accountsResponse.setLastName(account.getLastName());
+                accountsResponse.setDateOfBirth(account.getDateOfBirth());
                 accountsResponse.setEmail(account.getEmail());
                 accountsResponse.setId(account.getUuid());
                 return ResponseEntity.ok(accountsResponse);
@@ -93,10 +97,20 @@ public class AccountService {
         }
     }
 
+    public ResponseEntity<Object> updateAccount(AccountUpdateCommand command, String uuid) {
+        log.debug("About to process [{}]", command);
+
+        if(!command.getPassword().equals(command.getConfirmationPassword())) {
+            log.info("Mismatching passwords.");
+            return ResponseEntity.badRequest().body(buildAlert("Las contraseñas no coinciden."));
+        }
+        return  ResponseEntity.ok().body(buildAlert("Cuenta actualizada."));
+    }
+
 
     public List<Accounts> findAccountsByEmail(String email) {
 
-        List<Accounts> accounts = accountsRepository.findFirst3ByEmailIgnoreCaseContaining(email);
+        List<Accounts> accounts = accountsRepository.findByEmailIgnoreCaseContaining(email);
 
         log.info("Found {} records with the partial email address={}", accounts.size(), email);
         return accounts;
