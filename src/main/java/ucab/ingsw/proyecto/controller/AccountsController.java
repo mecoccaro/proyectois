@@ -34,7 +34,7 @@ public class AccountsController {
     }
 
     @RequestMapping(value = "/update/{uuid}", consumes = "application/json", method = RequestMethod.PUT)
-    public ResponseEntity update(@Valid @RequestBody AccountUpdateCommand command, @PathVariable("id") String uuid) {
+    public ResponseEntity update(@Valid @RequestBody AccountUpdateCommand command, @PathVariable("uuid") String uuid) {
         return accountService.updateAccount(command, uuid);
     }
 

@@ -36,6 +36,18 @@ public class AccountService {
         return account;
     }
 
+    private Accounts buildAgainAccount(AccountUpdateCommand command, String uuid) {
+        Accounts accounts = new Accounts();
+        accounts.setId(Long.parseLong(uuid));
+        accounts.setFirstName(command.getFirstName());
+        accounts.setLastName(command.getLastName());
+        accounts.setDateOfBirth(command.getDateOfBirth());
+        accounts.setEmail(command.getEmail());
+        accounts.setPassword(command.getPassword());
+
+        return accounts;
+    }
+
     private AlertsResponse buildAlert(String message) {
         AlertsResponse response = new AlertsResponse();
         response.setMessage(message);
@@ -100,11 +112,18 @@ public class AccountService {
     public ResponseEntity<Object> updateAccount(AccountUpdateCommand command, String uuid) {
         log.debug("About to process [{}]", command);
 
-        if(!command.getPassword().equals(command.getConfirmationPassword())) {
-            log.info("Mismatching passwords.");
-            return ResponseEntity.badRequest().body(buildAlert("Las contraseñas no coinciden."));
+        if (!accountsRepository.existsById(Long.parseLong(uuid))) {
+            log.info("Cannot find user with ID={}", uuid);
+
+            return ResponseEntity.badRequest().body(buildAlert("invalid"));
+        } else {
+            Accounts accounts = buildAgainAccount(command, uuid);
+            accounts = accountsRepository.save(accounts);
+
+            log.info("Updated user ID={}", accounts.getId());
+
+            return ResponseEntity.ok().body(buildAlert("Datos Actualizados."));
         }
-        return  ResponseEntity.ok().body(buildAlert("Cuenta actualizada."));
     }
 
 
