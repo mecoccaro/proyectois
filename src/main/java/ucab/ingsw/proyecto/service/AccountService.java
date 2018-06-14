@@ -4,8 +4,11 @@ import org.springframework.http.ResponseEntity;
 import ucab.ingsw.proyecto.command.AccountSignUpCommand;
 import ucab.ingsw.proyecto.command.AccountLogInCommand;
 import ucab.ingsw.proyecto.command.AccountUpdateCommand;
+import ucab.ingsw.proyecto.command.AccountAddFriendCommand;
 import ucab.ingsw.proyecto.response.AccountsResponse;
 import ucab.ingsw.proyecto.response.AlertsResponse;
+import ucab.ingsw.proyecto.repository.FriendsRepository;
+import ucab.ingsw.proyecto.model.Friends;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,9 @@ public class AccountService {
     @Autowired
     private AccountsRepository accountsRepository;
 
+//    @Autowired
+//    private FriendsRepository friendsRepository;
+
     private Accounts buildAccount(AccountSignUpCommand command) {
         Accounts account = new Accounts();
         account.setId(System.currentTimeMillis());
@@ -36,11 +42,42 @@ public class AccountService {
         return account;
     }
 
+    private Accounts buildAgainAccount(AccountUpdateCommand command, String uuid) {
+        Accounts accounts = new Accounts();
+        accounts.setId(Long.parseLong(uuid));
+        accounts.setFirstName(command.getFirstName());
+        accounts.setLastName(command.getLastName());
+        accounts.setDateOfBirth(command.getDateOfBirth());
+        accounts.setEmail(command.getEmail());
+        accounts.setPassword(command.getPassword());
+
+        return accounts;
+    }
+
+    private Accounts buildFriend(AccountAddFriendCommand command, String id){
+        Accounts accounts = new Accounts();
+        accounts.setId(Long.parseLong(id));
+        accounts = searchAccountsById(id);
+        accounts.getFriends().add(command.getFriendId());
+
+        return accounts;
+    }
+
     private AlertsResponse buildAlert(String message) {
         AlertsResponse response = new AlertsResponse();
         response.setMessage(message);
         return response;
     }
+
+    private Accounts searchAccountsById(String id){
+        if(accountsRepository.findById(Long.parseLong(id)).isPresent()){
+            Accounts accounts = accountsRepository.findById(Long.parseLong(id)).get();
+            return accounts;
+        }
+        else
+            return null;
+    }
+
 
 
     public ResponseEntity<Object> register(AccountSignUpCommand command) {
@@ -97,14 +134,65 @@ public class AccountService {
         }
     }
 
+    public ResponseEntity<Object> accountsById(String id){
+        log.debug("About to process [{}]", id);
+
+        Accounts accounts = searchAccountsById(id);
+        if (accounts == null) {
+            log.info("Cannot find ID={}", id);
+
+            return ResponseEntity.badRequest().body(buildAlert("invalid_Id"));
+        }
+        else {
+            AccountsResponse accountsResponse = new AccountsResponse();
+            accountsResponse.setFirstName(accounts.getFirstName());
+            accountsResponse.setLastName(accounts.getLastName());
+            accountsResponse.setDateOfBirth(accounts.getDateOfBirth());
+            accountsResponse.setEmail(accounts.getEmail());
+            accountsResponse.setPassword(accounts.getPassword());
+            accountsResponse.setId(accounts.getUuid());
+            accountsResponse.setFriends(accounts.getFriends());
+
+
+            log.info("Account finded with ID={}", id);
+            return ResponseEntity.ok(accountsResponse);
+        }
+
+    }
+
+    public ResponseEntity<Object> addFriend(AccountAddFriendCommand command, String id){
+        log.debug("About to process [{}]", command);
+
+        if (!accountsRepository.existsById(Long.parseLong(id))) {
+            log.info("Cannot find user with ID={}");
+
+            return ResponseEntity.badRequest().body(buildAlert("invalid"));
+        } else {
+            Accounts accounts = buildFriend(command,id);
+            accounts = accountsRepository.save(accounts);
+
+            log.info("Friend addrd ID={}", command);
+
+            return ResponseEntity.ok().body(buildAlert("Amigo anadido"));
+
+        }
+    }
+
     public ResponseEntity<Object> updateAccount(AccountUpdateCommand command, String uuid) {
         log.debug("About to process [{}]", command);
 
-        if(!command.getPassword().equals(command.getConfirmationPassword())) {
-            log.info("Mismatching passwords.");
-            return ResponseEntity.badRequest().body(buildAlert("Las contraseñas no coinciden."));
+        if (!accountsRepository.existsById(Long.parseLong(uuid))) {
+            log.info("Cannot find user with ID={}", uuid);
+
+            return ResponseEntity.badRequest().body(buildAlert("invalid"));
+        } else {
+            Accounts accounts = buildAgainAccount(command, uuid);
+            accounts = accountsRepository.save(accounts);
+
+            log.info("Updated user ID={}", accounts.getId());
+
+            return ResponseEntity.ok().body(buildAlert("Datos Actualizados."));
         }
-        return  ResponseEntity.ok().body(buildAlert("Cuenta actualizada."));
     }
 
 

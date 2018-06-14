@@ -9,6 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
+import java.util.List;
+import java.util.ArrayList;
 
 @Data
 @ToString
@@ -22,4 +24,5 @@ public class Accounts implements Serializable {
     private String email;
     private String password;
     private String uuid = UUID.randomUUID().toString();
+    private List<Long> friends = new ArrayList<>();
 }

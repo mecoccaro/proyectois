@@ -5,6 +5,7 @@ import ucab.ingsw.proyecto.service.AccountService;
 import ucab.ingsw.proyecto.response.AccountsResponse;
 import ucab.ingsw.proyecto.command.AccountSignUpCommand;
 import ucab.ingsw.proyecto.command.AccountLogInCommand;
+import ucab.ingsw.proyecto.command.AccountAddFriendCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,15 @@ public class AccountsController {
     @RequestMapping(value = "/update/{uuid}", consumes = "application/json", method = RequestMethod.PUT)
     public ResponseEntity update(@Valid @RequestBody AccountUpdateCommand command, @PathVariable("id") String uuid) {
         return accountService.updateAccount(command, uuid);
+    }
+    @RequestMapping(value = "/searchId/{id}", method = RequestMethod.GET)
+    public ResponseEntity getUser(@PathVariable("id") String id) {
+        return accountService.accountsById(id);
+    }
+
+    @RequestMapping(value = "/addFriend/{id}", consumes = "application/json", method = RequestMethod.PUT)
+    public ResponseEntity addFriend(@Valid @RequestBody AccountAddFriendCommand command, @PathVariable("id") String id){
+        return accountService.addFriend(command,id);
     }
 
 }
