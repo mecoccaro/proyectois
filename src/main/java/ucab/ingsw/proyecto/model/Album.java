@@ -14,16 +14,12 @@ import java.util.ArrayList;
 
 @Data
 @ToString
-public class Accounts implements Serializable {
+public class Album implements Serializable {
 
     @Id
     private long id;
-    private String firstName;
-    private String lastName;
-    private String dateOfBirth;
-    private String email;
-    private String password;
-    private String uuid = UUID.randomUUID().toString();
-    private List<Long> friends = new ArrayList<>();
-    private List<Long> albums = new ArrayList<>();
+    private long accountId;
+    private String title;
+    private String description;
+    private List<Long> media = new ArrayList<>();
 }

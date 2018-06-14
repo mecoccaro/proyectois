@@ -1,6 +1,7 @@
 package ucab.ingsw.proyecto.service;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import ucab.ingsw.proyecto.command.AccountSignUpCommand;
 import ucab.ingsw.proyecto.command.AccountLogInCommand;
 import ucab.ingsw.proyecto.command.AccountUpdateCommand;
@@ -19,7 +20,7 @@ import ucab.ingsw.proyecto.response.AccountsResponse;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+@CrossOrigin
 @Slf4j
 @Service("accountService")
 public class AccountService {
