@@ -7,6 +7,7 @@ import ucab.ingsw.proyecto.model.Album;
 
 import java.util.List;
 
+@Repository
 public interface AlbumRepository extends CrudRepository<Album, Long>{
 
     List<Album> findAlbumById(String partialAlbum);
