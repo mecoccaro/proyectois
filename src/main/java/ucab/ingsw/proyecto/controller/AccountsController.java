@@ -44,9 +44,9 @@ public class AccountsController {
         return accountService.accountsById(id);
     }
 
-//    @RequestMapping(value = "/addFriend", consumes = "application/json", method = RequestMethod.POST)
-//    public ResponseEntity addFriend(@Valid @RequestBody AccountAddFriendCommand command){
-//        return accountService.addFriend(command);
-//    }
+    @RequestMapping(value = "/addFriend/{id}", consumes = "application/json", method = RequestMethod.POST)
+    public ResponseEntity addFriend(@Valid @RequestBody AccountAddFriendCommand command, @PathVariable("id") String id){
+        return accountService.addFriend(command,id);
+    }
 
 }

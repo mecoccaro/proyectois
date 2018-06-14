@@ -1,6 +1,7 @@
 package ucab.ingsw.proyecto.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import ucab.ingsw.proyecto.model.Friends;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

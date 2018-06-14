@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class AlbumDeleteCommand implements Serializable {
     @NotNull(message = "Se requiere un usuario")
     @NotEmpty(message = "Se requiere un usuario")
-    private String userId;
+    private String accountId;
 
     @NotNull(message = "Se requiere un album")
     @NotEmpty(message = "Se requiere un album")

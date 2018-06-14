@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import ucab.ingsw.proyecto.command.AlbumCreateCommand;
 import ucab.ingsw.proyecto.command.AlbumDeleteCommand;
 import ucab.ingsw.proyecto.service.AlbumService;
+import ucab.ingsw.proyecto.repository.AlbumRepository;
+
 
 import javax.validation.Valid;
 
-@Slf4j
 @CrossOrigin
+@Slf4j
 @RestController
 @RequestMapping(value = "/album", produces = "application/json")
 public class AlbumController {

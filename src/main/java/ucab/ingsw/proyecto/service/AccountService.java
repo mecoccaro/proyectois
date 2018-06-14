@@ -5,6 +5,8 @@ import ucab.ingsw.proyecto.command.AccountAddFriendCommand;
 import ucab.ingsw.proyecto.command.AccountSignUpCommand;
 import ucab.ingsw.proyecto.command.AccountLogInCommand;
 import ucab.ingsw.proyecto.command.AccountUpdateCommand;
+import ucab.ingsw.proyecto.model.Friends;
+import ucab.ingsw.proyecto.repository.FriendsRepository;
 import ucab.ingsw.proyecto.response.AccountsResponse;
 import ucab.ingsw.proyecto.response.AlertsResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,9 @@ public class AccountService {
 
     @Autowired
     private AccountsRepository accountsRepository;
+
+    @Autowired
+    private FriendsRepository friendsRepository;
 
 
     private Accounts buildAccount(AccountSignUpCommand command) {
@@ -169,21 +174,32 @@ public class AccountService {
         }
     }
 
-//    public ResponseEntity<Object> addFriend(AccountAddFriendCommand command, String id){
-//        log.debug("About to process [{}]", command);
-//
-//        if (!accountsRepository.existsById(Long.parseLong(id))) {
-//            log.info("Cannot find user with ID={}");
-//
-//            return ResponseEntity.badRequest().body(buildAlert("invalid"));
-//        } else {
-//            Accounts friend = addNewFriend(command, id);
-//            friend = accountsRepository.save(friend);
-//
-//            return ResponseEntity.ok().body(buildAlert("Amigo anadido."));
-//
-//        }
-//    }
+    public ResponseEntity<Object> addFriend(AccountAddFriendCommand command, String id){
+        log.debug("About to process [{}]", command);
+
+        if (!accountsRepository.existsById(Long.parseLong(id))) {
+            log.info("Cannot find user with ID={}");
+
+            return ResponseEntity.badRequest().body(buildAlert("invalid"));
+        } else {
+            Friends friend = new Friends();
+            Accounts accounts = searchAccountsById(id);
+            boolean choice = accounts.getFriends().add(friend.getId());
+
+            if(choice) {
+                log.info("Friend id={} added to the account ={}", friend.getId(), accounts.getId());
+                accountsRepository.save(accounts);
+                friendsRepository.save(friend);
+                return ResponseEntity.ok().body(buildAlert("Amigo anadido"));
+            }
+
+            else{
+                log.error("Error adding friend ={} on the account ={}", friend.getId(), accounts.getId());
+                return ResponseEntity.badRequest().body(buildAlert("error anadiendo amigo"));
+            }
+
+        }
+    }
 
 
     public List<Accounts> findAccountsByEmail(String email) {

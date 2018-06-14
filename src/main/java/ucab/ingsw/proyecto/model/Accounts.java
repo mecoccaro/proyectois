@@ -25,6 +25,6 @@ public class Accounts implements Serializable {
     private String email;
     private String password;
     private String uuid = UUID.randomUUID().toString();
-
-    private ArrayList<String>Friends;
+    private List<Long> friends = new ArrayList<>();
+    private List<Long> albums = new ArrayList<>();
 }

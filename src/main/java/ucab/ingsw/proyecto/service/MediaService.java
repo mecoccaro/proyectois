@@ -9,6 +9,7 @@ import ucab.ingsw.proyecto.command.MediaDeleteCommand;
 import ucab.ingsw.proyecto.model.Accounts;
 import ucab.ingsw.proyecto.model.Album;
 import ucab.ingsw.proyecto.model.Media;
+import ucab.ingsw.proyecto.repository.AccountsRepository;
 import ucab.ingsw.proyecto.repository.AlbumRepository;
 import ucab.ingsw.proyecto.repository.MediaRepository;
 import ucab.ingsw.proyecto.response.AlbumResponse;
@@ -19,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-
 @Service("mediaService")
 public class MediaService {
 
@@ -32,6 +32,9 @@ public class MediaService {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private AccountsRepository accountsRepository;
+
     private Media newMedia(MediaCreateCommand command){
         Media media = new Media();
         media.setId(System.currentTimeMillis());
@@ -39,6 +42,22 @@ public class MediaService {
         media.setUrl(command.getUrl());
         media.setType(command.getType());
         return media;
+    }
+    private Accounts searchAccountsById(String id){
+        if(accountsRepository.findById(Long.parseLong(id)).isPresent()){
+            Accounts accounts = accountsRepository.findById(Long.parseLong(id)).get();
+            return accounts;
+        }
+        else
+            return null;
+    }
+
+    private Media searchMediaById(String id){
+
+        if(mediaRepository.existsById(Long.parseLong(id))) {
+            Media media = mediaRepository.findById(Long.parseLong(id)).get();
+            return media;
+        }else return null;
     }
 
     private AlertsResponse alertsResponse(String message){
@@ -64,7 +83,7 @@ public class MediaService {
 
     public ResponseEntity<Object> getMediaList(String id){
         if(albumRepository.existsById(Long.parseLong(id))){
-            Album album = albumRepository.findById(Long.parseLong(id).).get();
+            Album album = albumRepository.findById(Long.parseLong(id)).get();
             List<MediaResponse> mediaResponseList = createMediaList(album);
 
             if(mediaResponseList.isEmpty()){
@@ -105,25 +124,25 @@ public class MediaService {
     }
 
     public ResponseEntity<Object> createMedia(MediaCreateCommand command){
-        Accounts accounts = accountService.searchAccountsById(command.getAccountId());
+        Accounts accounts = searchAccountsById(command.getAccountId());
 
         if(accounts == null){
             log.info("Cant find the account ={}", command.getAccountId());
-            return ResponseEntity.badRequest().body(alertsResponse("invalid_user."));
+            return ResponseEntity.badRequest().body(alertsResponse("invalid account"));
         }
 
         else if(!(albumRepository.existsById(Long.parseLong(command.getAlbumId())))){
             log.info("Cant find album ={}", command.getAlbumId());
-            return ResponseEntity.badRequest().body(alertsResponse("invalid_album_Id."));
+            return ResponseEntity.badRequest().body(alertsResponse("invalid album Id."));
         }
 
-        else if(!(accounts.getAlbum().stream().anyMatch(i-> i == Long.parseLong(command.getAlbumId())))){
+        else if(!(accounts.getAlbums().stream().anyMatch(i-> i == Long.parseLong(command.getAlbumId())))){
             log.info("The album ={} is not on the account ={}", command.getAlbumId(), command.getAccountId());
-            return ResponseEntity.badRequest().body(alertsResponse("album_not_on_list"));
+            return ResponseEntity.badRequest().body(alertsResponse("album not on list"));
         }
 
         else{
-            Media media = newMedia(command);
+            Media media = new Media();
             Album album = albumRepository.findById(Long.parseLong(command.getAlbumId())).get();
             boolean choice = album.getMedia().add(media.getId());
 
@@ -131,7 +150,7 @@ public class MediaService {
                 log.info("Media ={} added to the album ={}", album.getId(), accounts.getId());
                 albumRepository.save(album);
                 mediaRepository.save(media);
-                return ResponseEntity.ok().body(alertsResponse("media_added"));
+                return ResponseEntity.ok().body(alertsResponse("media added"));
             }
 
             else{
@@ -144,26 +163,26 @@ public class MediaService {
     }
 
     public ResponseEntity<Object> deleteMedia(MediaDeleteCommand command){
-        Accounts accounts = accountService.searchAccountsById(command.getAccountId());
+        Accounts accounts = searchAccountsById(command.getAccountId());
 
         if(accounts == null){
             log.info("Cant find the account ={}", command.getAccountId());
-            return ResponseEntity.badRequest().body(alertsResponse("invalid_user"));
+            return ResponseEntity.badRequest().body(alertsResponse("invalid account"));
         }
 
         else if(!(albumRepository.existsById(Long.parseLong(command.getAlbumId())))){
             log.info("Cant find the album ={}", command.getAlbumId());
-            return ResponseEntity.badRequest().body(alertsResponse("invalid_album"));
+            return ResponseEntity.badRequest().body(alertsResponse("invalid album"));
         }
 
-        else if(!(accounts.getAlbum().stream().anyMatch(i-> i == Long.parseLong(command.getAlbumId())))){
+        else if(!(accounts.getAlbums().stream().anyMatch(i-> i == Long.parseLong(command.getAlbumId())))){
             log.info("The album ={} is not on the account ={}", command.getAlbumId(), command.getAccountId());
-            return ResponseEntity.badRequest().body(alertsResponse("album_not_on_account"));
+            return ResponseEntity.badRequest().body(alertsResponse("album not on account"));
         }
 
         else if(!(mediaRepository.existsById(Long.parseLong(command.getMediaId())))){
             log.info("Cant find media ={}", command.getMediaId());
-            return ResponseEntity.badRequest().body(alertsResponse("invalid_media."));
+            return ResponseEntity.badRequest().body(alertsResponse("invalid media."));
         }
 
         else{
