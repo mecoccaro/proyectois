@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Data
 @ToString
-public class MediaRemoveCommand implements Serializable {
+public class MediaDeleteCommand implements Serializable {
     @NotNull(message = "Se requiere un usuario")
     @NotEmpty(message = "Se requiere un usuario")
     private String userId;

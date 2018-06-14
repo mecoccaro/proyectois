@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Data
 @ToString
-public class AlbumRemoveCommand implements Serializable {
+public class AlbumDeleteCommand implements Serializable {
     @NotNull(message = "Se requiere un usuario")
     @NotEmpty(message = "Se requiere un usuario")
     private String userId;
