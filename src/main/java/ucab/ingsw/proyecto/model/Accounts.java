@@ -5,9 +5,12 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -22,4 +25,6 @@ public class Accounts implements Serializable {
     private String email;
     private String password;
     private String uuid = UUID.randomUUID().toString();
+
+    private ArrayList<String>Friends;
 }

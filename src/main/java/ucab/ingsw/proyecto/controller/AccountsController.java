@@ -1,5 +1,6 @@
 package ucab.ingsw.proyecto.controller;
 
+import ucab.ingsw.proyecto.command.AccountAddFriendCommand;
 import ucab.ingsw.proyecto.command.AccountUpdateCommand;
 import ucab.ingsw.proyecto.service.AccountService;
 import ucab.ingsw.proyecto.response.AccountsResponse;
@@ -37,5 +38,15 @@ public class AccountsController {
     public ResponseEntity update(@Valid @RequestBody AccountUpdateCommand command, @PathVariable("uuid") String uuid) {
         return accountService.updateAccount(command, uuid);
     }
+
+    @RequestMapping(value = "/searchId/{id}", method = RequestMethod.GET)
+    public ResponseEntity getUser(@PathVariable("id") String id) {
+        return accountService.accountsById(id);
+    }
+
+//    @RequestMapping(value = "/addFriend", consumes = "application/json", method = RequestMethod.POST)
+//    public ResponseEntity addFriend(@Valid @RequestBody AccountAddFriendCommand command){
+//        return accountService.addFriend(command);
+//    }
 
 }
