@@ -10,10 +10,11 @@ import java.io.Serializable;
 @ToString
 public class Media implements Serializable {
 
-
     @Id
     private long id;
-    private String url;
     private long albumId;
+    private String url;
+    private String link;
     private String type;
+
 }

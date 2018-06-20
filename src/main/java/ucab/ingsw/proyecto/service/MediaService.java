@@ -6,22 +6,11 @@ import ucab.ingsw.proyecto.command.*;
 import ucab.ingsw.proyecto.model.Album;
 import ucab.ingsw.proyecto.model.Media;
 import ucab.ingsw.proyecto.repository.MediaRepository;
-import ucab.ingsw.proyecto.response.AccountsResponse;
 import ucab.ingsw.proyecto.response.AlertsResponse;
-import ucab.ingsw.proyecto.response.AlbumResponse;
-import ucab.ingsw.proyecto.repository.FriendsRepository;
 import ucab.ingsw.proyecto.repository.AlbumRepository;
-import ucab.ingsw.proyecto.model.Friends;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ucab.ingsw.proyecto.model.Accounts;
-import ucab.ingsw.proyecto.repository.AccountsRepository;
-import ucab.ingsw.proyecto.response.AccountsResponse;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @CrossOrigin
 @Slf4j
