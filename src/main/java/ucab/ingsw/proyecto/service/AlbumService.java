@@ -2,28 +2,15 @@ package ucab.ingsw.proyecto.service;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import ucab.ingsw.proyecto.command.AccountSignUpCommand;
-import ucab.ingsw.proyecto.command.AccountLogInCommand;
-import ucab.ingsw.proyecto.command.AccountUpdateCommand;
-import ucab.ingsw.proyecto.command.AccountAddFriendCommand;
 import ucab.ingsw.proyecto.command.AlbumCreateCommand;
 import ucab.ingsw.proyecto.model.Album;
-import ucab.ingsw.proyecto.response.AccountsResponse;
 import ucab.ingsw.proyecto.response.AlertsResponse;
-import ucab.ingsw.proyecto.response.AlbumResponse;
-import ucab.ingsw.proyecto.repository.FriendsRepository;
 import ucab.ingsw.proyecto.repository.AlbumRepository;
-import ucab.ingsw.proyecto.model.Friends;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ucab.ingsw.proyecto.model.Accounts;
 import ucab.ingsw.proyecto.repository.AccountsRepository;
-import ucab.ingsw.proyecto.response.AccountsResponse;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @CrossOrigin
 @Slf4j
