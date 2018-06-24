@@ -1,9 +1,9 @@
 package ucab.ingsw.proyecto.service.instagramData;
 
-import lombok.Data;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.ToString;
-import java.io.Serializable;
+        import lombok.Data;
+        import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+        import lombok.ToString;
+        import java.io.Serializable;
 
 @Data
 @ToString
