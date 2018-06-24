@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ucab.ingsw.proyecto.response.AlertsResponse;
 import ucab.ingsw.proyecto.service.Mediassearch.InstagramSearchService;
+import ucab.ingsw.proyecto.service.Mediassearch.YoutubeSearchService;
 import ucab.ingsw.proyecto.service.SearchMediasService;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class SearchMediaController {
 
         socialMedias = new ArrayList<>();
         socialMedias.add("instagram");
-        socialMedias.add("soundcloud");
+        socialMedias.add("spotify");
         socialMedias.add("youtube");
     }
 
@@ -49,6 +50,8 @@ public class SearchMediaController {
         if(checkSocialMedia(socialMedia)) {
             if (socialMedia.toLowerCase().equals(socialMedias.get(0))) {
                 searchMediasService.setSearchSocialMedias(new InstagramSearchService());
+            }else {
+                searchMediasService.setSearchSocialMedias(new YoutubeSearchService());
             }
         tagSearch = tagSearch.replace(" ", "");
         return searchMediasService.search(tagSearch);
