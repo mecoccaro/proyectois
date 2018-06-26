@@ -21,6 +21,7 @@ public class YoutubeSearchService implements SearchSocialMedia {
 
     private static final String KEY = "AIzaSyCvUGU13UGsXQs1xSUIpDBjlNKYcSDy9Ho";
     private static final String TYPE = "Video";
+    private static final long NUMBER_OF_VIDEOS_RETURNED = 10;
 
     private YoutubeListResponse buildResponse(SearchListResponse searchResponse){
 
@@ -41,7 +42,7 @@ public class YoutubeSearchService implements SearchSocialMedia {
     }
 
     private String buildUrl(String Id){
-        return "https://www.youtube.com/watch?v="+Id;
+        return "https://www.youtube.com/watch?v="+Id; //url del video
     }
 
     private AlertsResponse buildAlert(String message) {
@@ -62,6 +63,7 @@ public class YoutubeSearchService implements SearchSocialMedia {
             search.setKey(KEY);
             search.setQ(videoToSearch);
             search.setType(TYPE);
+            search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
             SearchListResponse searchResponse = search.execute();
             YoutubeListResponse youtubeListResponse = buildResponse(searchResponse);
             if(youtubeListResponse.getItems().isEmpty()){

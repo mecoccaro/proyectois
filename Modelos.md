@@ -59,3 +59,7 @@ https://proyectois.herokuapp.com/search/instagram?q=TagABuscar
 
 No se puede buscar cualquier tag solo algunos que especificos. por ejemplo:
 Bogota.
+
+Busqueda en YT
+https://proyectois.herokuapp.com/search/youtube?q=Busqueda
+Se busca lo que se quiera, la api solo retorna 5 resultados.
