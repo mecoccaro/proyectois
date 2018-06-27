@@ -62,4 +62,8 @@ Bogota.
 
 Busqueda en YT
 https://proyectois.herokuapp.com/search/youtube?q=Busqueda
-Se busca lo que se quiera, la api solo retorna 5 resultados.
+Se busca lo que se quiera, la api solo retorna 10 resultados.
+
+Busqueda en Spotify
+https://proyectois.herokuapp.com/search/spotify?q=Busqueda
+Se busca lo que se quiera, la api solo retorna 10 resultados.
