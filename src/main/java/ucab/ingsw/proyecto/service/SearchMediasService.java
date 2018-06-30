@@ -15,7 +15,7 @@ public class SearchMediasService {
 
     private SearchSocialMedia socialMedia;
 
-    private AlertsResponse buildAlert(String message) {
+    private AlertsResponse buildAlert(String invalid_chracters, String message) {
         AlertsResponse response = new AlertsResponse();
         response.setMessage(message);
         return response;
@@ -25,11 +25,13 @@ public class SearchMediasService {
         this.socialMedia = socialMedia;
     }
 
-    public ResponseEntity<Object> search(String socialMedias){
-        if(socialMedias.matches("[a-zA-Z0-9]*"))
-            return  socialMedia.seeker(socialMedias);
-        else
-            log.info("Invalid characters", socialMedias);
-            return ResponseEntity.badRequest().body(buildAlert("Caracteres invalidos"));
+    public ResponseEntity<Object> search(String tagSearch, String socialMedias){
+        if(!(tagSearch.matches("[a-zA-Z0-9]*"))&&(socialMedias.toLowerCase().equals("instagram"))) {
+            return ResponseEntity.badRequest().body(buildAlert("Invalid chracters", tagSearch));
+        }
+        else{
+            return socialMedia.seeker(tagSearch);
+        }
+
     }
 }

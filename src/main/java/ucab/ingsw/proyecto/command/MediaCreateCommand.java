@@ -22,8 +22,6 @@ public class MediaCreateCommand {
     @NotEmpty(message = "Se requiere url.")
     private String url;
 
-    @NotNull(message = "Se requiere enlace.")
-    @NotEmpty(message = "Se requiere enlace.")
     private String link;
 
 }
