@@ -48,7 +48,7 @@ crear una media PUT
 https://proyectois.herokuapp.com/media/create/{idDelAlbum}
 
 {
-	"type" : "image/video",
+	"type" : "image/video/track",
 	"albumId" : "id del album",
 	"url" : "el url de la ubicacion de la imagen o video",
 	"link" : "url de instagram"
@@ -57,8 +57,10 @@ https://proyectois.herokuapp.com/media/create/{idDelAlbum}
 buscar en instagram GET
 https://proyectois.herokuapp.com/search/instagram?q=TagABuscar
 
-No se puede buscar cualquier tag solo algunos que especificos. por ejemplo:
-Bogota.
+tags que se pueden buscar:
+#art #stencil #stencylart #arte #timelapseart #city #capitals #travel #world #video #timelapse 
+#stencils #caracas #venezuela #blackandwhite #streetartccs #videoart #artecaracas #caracasarte #wall
+#chalk #maduro #nicolasmaduro #blackboard #artecaracas #caracasarte #wall #takeyourpills
 
 Busqueda en YT
 https://proyectois.herokuapp.com/search/youtube?q=Busqueda

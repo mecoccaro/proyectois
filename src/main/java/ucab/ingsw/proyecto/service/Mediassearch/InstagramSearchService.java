@@ -42,7 +42,7 @@ public class InstagramSearchService implements SearchSocialMedia {
         return response;
     }
 
-    private static final String AUTH_TOKEN = "46287188.09cd0e3.0deed527f71b46ffa93f73065f570f48";
+    private static final String AUTH_TOKEN = "7155049281.09cd0e3.0a9070bdef63475eb874ee0767a34d29";
 
     public ResponseEntity<Object> seeker(String tagToSearch) {
 
