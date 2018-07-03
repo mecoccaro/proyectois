@@ -6,12 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ucab.ingsw.proyecto.response.AlertsResponse;
 import ucab.ingsw.proyecto.service.Mediassearch.InstagramSearchService;
+import ucab.ingsw.proyecto.service.Mediassearch.SearchSocialMedia;
 import ucab.ingsw.proyecto.service.Mediassearch.SpotifySearchService;
 import ucab.ingsw.proyecto.service.Mediassearch.YoutubeSearchService;
 import ucab.ingsw.proyecto.service.SearchMediasService;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @CrossOrigin
 @Slf4j
@@ -23,6 +25,10 @@ public class SearchMediaController {
     private SearchMediasService searchMediasService;
 
     private List<String> socialMedias;
+
+
+
+    public String actual;
 
     private void setValidSocialMedias(){
 
@@ -46,6 +52,7 @@ public class SearchMediaController {
         response.setMessage(message);
         return response;
     }
+
     @RequestMapping(value = "/{socialMedia}", method = RequestMethod.GET)
     public ResponseEntity search(@PathVariable("socialMedia") String socialMedia, @RequestParam("q") String tagSearch) {
         if(checkSocialMedia(socialMedia)) {

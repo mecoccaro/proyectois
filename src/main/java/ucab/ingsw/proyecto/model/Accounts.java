@@ -23,6 +23,7 @@ public class Accounts implements Serializable {
     private String dateOfBirth;
     private String email;
     private String password;
+    private String profilePicture;
     private String uuid = UUID.randomUUID().toString();
     private List<Long> friends = new ArrayList<>();
     private List<Long> albums = new ArrayList<>();

@@ -38,4 +38,8 @@ public class AccountSignUpCommand implements Serializable {
     @Size(min = Validation.PASSWORD_MIN_SIZE, message = "La contraseña debe 6 caracteres o mas ")
     private String confirmationPassword;
 
+    @NotNull(message = "Se requiere genero de usuario.")
+    @NotEmpty(message = "Se requiere genero de usuario.")
+    private String gender;
+
 }
