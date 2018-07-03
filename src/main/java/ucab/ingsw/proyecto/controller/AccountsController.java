@@ -39,13 +39,18 @@ public class AccountsController {
         return accountService.updateAccount(command, uuid);
     }
     @RequestMapping(value = "/searchId/{id}", method = RequestMethod.GET)
-    public ResponseEntity getUser(@PathVariable("id") String id) {
+    public ResponseEntity getAccount(@PathVariable("id") String id) {
         return accountService.accountsById(id);
     }
 
     @RequestMapping(value = "/addFriend/{id}", consumes = "application/json", method = RequestMethod.PUT)
     public ResponseEntity addFriend(@Valid @RequestBody AccountAddFriendCommand command, @PathVariable("id") String id){
         return accountService.addFriend(command,id);
+    }
+
+    @RequestMapping(value = "/searchName/{name}", consumes = "application/json", method = RequestMethod.GET)
+    public ResponseEntity getAccountByName(@PathVariable("name") String name){
+        return accountService.getAccountsByName(name);
     }
 
 }

@@ -6,7 +6,8 @@ https://proyectois.herokuapp.com/account/registration
     "dateOfBirth" : "DD/MM/AA",
 	"email" : "email",
 	"password" : "clave",
-	"confirmationPassword" : "clave"
+	"confirmationPassword" : "clave",
+	"gender" : "Male/Female"
 }
 
 Login POST

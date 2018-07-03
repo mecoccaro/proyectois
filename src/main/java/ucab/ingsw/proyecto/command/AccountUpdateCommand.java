@@ -38,6 +38,6 @@ public class AccountUpdateCommand implements Serializable {
     @Size(min = Validation.PASSWORD_MIN_SIZE, message = "La contraseña debe 6 caracteres o mas ")
     private String confirmationPassword;
 
-
+    private String profilePicture;
 
 }

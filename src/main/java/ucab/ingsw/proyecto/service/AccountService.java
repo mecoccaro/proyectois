@@ -2,6 +2,7 @@ package ucab.ingsw.proyecto.service;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.client.RestTemplate;
 import ucab.ingsw.proyecto.command.AccountSignUpCommand;
 import ucab.ingsw.proyecto.command.AccountLogInCommand;
 import ucab.ingsw.proyecto.command.AccountUpdateCommand;
@@ -13,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ucab.ingsw.proyecto.model.Accounts;
 import ucab.ingsw.proyecto.repository.AccountsRepository;
+import ucab.ingsw.proyecto.service.profile.*;
 
+import java.util.ArrayList;
 import java.util.List;
 @CrossOrigin
 @Slf4j
@@ -34,6 +37,7 @@ public class AccountService {
         account.setDateOfBirth(command.getDateOfBirth());
         account.setEmail(command.getEmail());
         account.setPassword(command.getPassword());
+        account.setProfilePicture(getProfile(command.getGender()));
 
         return account;
     }
@@ -46,6 +50,7 @@ public class AccountService {
         accounts.setDateOfBirth(command.getDateOfBirth());
         accounts.setEmail(command.getEmail());
         accounts.setPassword(command.getPassword());
+        accounts.setProfilePicture(command.getProfilePicture());
 
         return accounts;
     }
@@ -72,6 +77,44 @@ public class AccountService {
         }
         else
             return null;
+    }
+
+    private static final String profile = "https://randomuser.me/api/?gender=";
+
+
+    private String getProfile(String gender){
+        String url;
+        if(gender.toLowerCase().equals("male")){
+            url = profile+"male";
+        }
+        else
+            url = profile+"female";
+        RestTemplate restTemplate = new RestTemplate();
+        AccountContainer accountContainer = restTemplate.getForObject(url, AccountContainer.class);
+
+        log.info("Returning profile picture ={}");
+        return accountContainer.getResults().get(0).getPicture().getLarge();
+    }
+
+
+    public ArrayList<AccountsResponse> searchAccountsByName(String search){
+        log.debug("About to process [{}]", search);
+        ArrayList<AccountsResponse> response = new ArrayList<>();
+        accountsRepository.findAll().forEach(it->{
+            String name = it.getFirstName();
+            String lastName = it.getLastName();
+            String fullName = name.concat(lastName);
+            if(fullName.toLowerCase().contains(search.toLowerCase())) {
+                AccountsResponse accountsResponse = new AccountsResponse();
+                accountsResponse.setFirstName(it.getFirstName());
+                accountsResponse.setLastName(it.getLastName());
+                accountsResponse.setEmail(it.getEmail());
+                accountsResponse.setId(it.getUuid());
+                accountsResponse.setDateOfBirth(it.getDateOfBirth());
+                response.add(accountsResponse);
+            }
+        });
+        return response;
     }
 
 
@@ -120,6 +163,7 @@ public class AccountService {
                 accountsResponse.setDateOfBirth(account.getDateOfBirth());
                 accountsResponse.setEmail(account.getEmail());
                 accountsResponse.setId(account.getUuid());
+                accountsResponse.setProfilePicture(account.getProfilePicture());
                 return ResponseEntity.ok(accountsResponse);
             }
             else {
@@ -141,6 +185,7 @@ public class AccountService {
         }
         else {
             AccountsResponse accountsResponse = new AccountsResponse();
+            accountsResponse.setProfilePicture(accounts.getProfilePicture());
             accountsResponse.setFirstName(accounts.getFirstName());
             accountsResponse.setLastName(accounts.getLastName());
             accountsResponse.setDateOfBirth(accounts.getDateOfBirth());
@@ -154,6 +199,19 @@ public class AccountService {
             return ResponseEntity.ok(accountsResponse);
         }
 
+    }
+
+    public ResponseEntity getAccountsByName(String search){
+        ArrayList<AccountsResponse> response = searchAccountsByName(search);
+        if(response.isEmpty()){
+            log.info("Cannot find name={}", search);
+
+            return ResponseEntity.badRequest().body(buildAlert("No se ha conseguido el usuario"));
+        }
+        else {
+            log.info("Returning info ={}", search);
+            return ResponseEntity.ok(response);
+        }
     }
 
     public ResponseEntity<Object> addFriend(AccountAddFriendCommand command, String id){

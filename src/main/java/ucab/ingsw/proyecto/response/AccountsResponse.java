@@ -16,6 +16,7 @@ public class AccountsResponse {
     private String dateOfBirth;
     private String email;
     private String password;
+    private String profilePicture;
     private List<Long> friends = new ArrayList<>();
 
 }

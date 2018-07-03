@@ -10,7 +10,8 @@ import java.util.ArrayList;
 @ToString
 public class MediaResponse {
     private long id;
-    private String url;
     private long albumId;
     private int type;
+    private String url;
+    private String link;
 }

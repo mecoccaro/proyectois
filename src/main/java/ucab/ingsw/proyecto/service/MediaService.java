@@ -38,7 +38,7 @@ public class MediaService {
         media.setAlbumId(Long.parseLong(id));
         media.setUrl(command.getUrl());
         media.setType(command.getType());
-
+        media.setLink(command.getLink());
         return media;
     }
 
@@ -68,8 +68,6 @@ public class MediaService {
             Album album = buildMedia(media,id);
             album = albumRepository.save(album);
             media = mediaRepository.save(media);
-
-
 
             log.info("media added ID={}", command);
 
