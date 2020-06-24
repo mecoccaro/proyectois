@@ -9,6 +9,7 @@ Se uso una Base de datos NoSQL.
 * Java en su version 7.
 * Spring Boot Framework.
 * MongoDB.
+- Desplegado en Heroku
 
 <p>
   <img
